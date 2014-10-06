@@ -29,10 +29,72 @@ function initialise_document_ready_functions()
     // initialise carousel
     $('#features-carousel').carousel({
       interval: 6000
-    })
+    });
 
     // initialise form validation and submit functions 
     validate_and_submit_forms();
+
+    // ------ On Opening Popups ------
+    $('#common-modal').on('shown.bs.modal', function()
+    {
+        // initialise popup image gallery
+        // - you can use the same functions below if you want to add a new Owl Carousel with different parameters (in this case call the carousel's unique ID instead)
+        // - documentation for Owl Carousel: http://www.owlgraphic.com/owlcarousel/#how-to
+        if ($('#common-modal .popup-image-gallery').length > 0)
+        {
+          // custom parameters for carousel (see Owl Carousel documentation for more info)
+          $("#common-modal .popup-image-gallery").owlCarousel({
+            autoPlay : 3000,
+            stopOnHover : true,
+            navigation: false,
+            paginationSpeed : 1000,
+            goToFirstSpeed : 2000,
+            singleItem : true,
+            lazyLoad : true,
+            autoHeight : true,
+            transitionStyle: "fade",
+            afterLazyLoad : function() {
+              position_modal_at_centre(); // position popup at the centre of the page 
+            }
+          }); 
+        }
+
+        // initialise popup alternate image gallery
+        if ($('#common-modal .popup-alt-image-gallery').length > 0)
+        {
+          $("#common-modal .popup-alt-image-gallery").owlCarousel({
+            autoPlay : false,
+            items : 5,
+            stopOnHover : true,
+            navigation: true,
+            paginationSpeed : 500,
+            goToFirstSpeed : 2000,
+            singleItem : false,
+            lazyLoad : true,
+            baseClass : 'hide-bullets',
+            autoHeight : false,
+            transitionStyle: "backSlide",
+            afterLazyLoad : function() {
+              position_modal_at_centre(); // position popup at the centre of the page 
+            }
+          }); 
+        }
+    });
+
+    // ------ On Closing Popups ------
+    $("#common-modal").on('hide.bs.modal', function()
+    {
+        // Destroy Owl Carousel image gallery when modal/popup is closed (it will be re-initialised again when popup is re-opened)
+        if ($('#common-modal .popup-image-gallery').length > 0)
+        {
+          var carousel_initialised_data = $('#common-modal .popup-image-gallery, #common-modal .popup-alt-image-gallery').data('owlCarousel');
+          carousel_initialised_data.destroy();
+        }
+    });
+    // ------ END: Owl Carousel ------    
+
+    // initialise WOW.js intro animations
+    new WOW().init();
 
     /* 
      * ----------------------------------------------------------
@@ -41,6 +103,7 @@ function initialise_document_ready_functions()
      */
     $(window).resize(function()
     { 
+
         // update variables already set in document.ready above
         amount_of_pixels_as_buffer_between_sections = 0.25 * ($(window).height()); // used in update_active_sections_on_scroll();
 

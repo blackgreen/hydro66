@@ -1,0 +1,5 @@
+/* It is recommended to place all your extra/additional CSS rules here */
+
+#main-content .form-style input.text-field,
+#main-content .form-style textarea {
+    background:rgba(0,0,0,0.55);}
