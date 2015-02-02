@@ -34,6 +34,9 @@
 
     <!-- place your extra custom styles in this file -->
     <link href="assets/css/custom.css" rel="stylesheet">
+    
+    <!-- Google reCaptcha -->
+    <script src='https://www.google.com/recaptcha/api.js'></script>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -341,9 +344,7 @@
                         <input type="tel" class="text-field form-control validate-field phone" data-validation-type="phone" id="form-contact-number" placeholder="Contact Number" name="contact_number">
                       </div>    
                      <div class="form-group text-right">
-                        <img id="form-captcha-img" src="assets/php/form_captcha/captcha_img.php">
-                        <input type="text" class="text-field form-control validate-field required" data-validation-type="captcha" id="form-captcha" placeholder="Enter Code" name="captcha">
-                        <span id="form-captcha-refresh" class="fa fa-refresh" title="Reload"></span>
+                        <div class="g-recaptcha" data-sitekey="6LdHWAETAAAAAJ5TbTbDaFzZU5f1urc330foFRSi"></div>
                       </div>                                  
                     </div><!-- end: form left col -->
 

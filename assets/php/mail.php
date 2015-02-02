@@ -9,12 +9,30 @@ $email_subject = "Hydro66 Contact Form submitted";
 
 // check CAPTCHA code first
 session_start();
-if (!isset($_POST["captcha"]) || 
-    $_SESSION["captcha_code"] != $_POST["captcha"])
+if (!isset($_POST["g-recaptcha-response"]))
 {
     echo 'captcha';
     die();
 }
+
+if (isset($_POST["g-recaptcha-response"]))
+{
+	
+	$query = "https://www.google.com/recaptcha/api/siteverify?secret=6LdHWAETAAAAAFMTsiq5x1gEJWodY8xPFE_pqhue&response=".$_POST["g-recaptcha-response"]."&remoteip=".$_SERVER['REMOTE_ADDR'];
+	
+	error_log("Checking recaptcha : $query");
+	
+	$json = file_get_contents($query);
+	error_log("json = $json");
+	$decode = json_decode($json);
+	error_log("result = ".$decode->{'success'});
+	
+	if (!($decode->{'success'})) {
+	    echo 'captcha';
+	    die();			
+	}
+}
+
 
 if(isset($_POST['email']))
 {

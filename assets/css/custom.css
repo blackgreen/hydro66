@@ -2,4 +2,6 @@
 
 #main-content .form-style input.text-field,
 #main-content .form-style textarea {
-    background:rgba(0,0,0,0.55);}
+    background:rgba(0,0,0,0.55);
+    -webkit-box-shadow: 0 0 0px 1000px gray inset;
+}

@@ -990,7 +990,7 @@ function validate_and_submit_forms(form_object)
                             message = "Contact request sent.<br>We will reply to your contact request as soon as we can.";
                             break;
                         case "captcha":
-                            message = "Incorrect text entered. (Case-sensitive)";
+                            message = "Please prove you are not a robot";
                             break;
                         case "incomplete":
                             message = "Please fill in all required fields.";
@@ -1005,22 +1005,11 @@ function validate_and_submit_forms(form_object)
                     message_field_html += (submission_successful == true) ? 'success' : 'error';
                     message_field_html += '">'+message+'</div>';
 
-                    // incorrect captcha
-                    if (!captcha_success) {
-                        this_form.find("#form-captcha").parent(".form-group").append(message_field_html);
-                        this_form.find("#form-captcha").siblings(".alert").fadeIn("fast");
-                    }
-                    // general message
-                    else {
-                        this_form.find(".form-general-error-container").html(message_field_html).fadeIn("fast", function(){
-                            // if submission was successful, hide message after some time
-                            $(this).delay(10000).fadeOut("fast", function(){ $(this).html(""); });
-                        });
-                    }
-
-                    // refresh captcha
-                    this_form.find("#form-captcha-img").replaceWith('<img id="form-captcha-img" src="assets/php/form_captcha/captcha_img.php">');
-                    this_form.find("#form-captcha").val("");
+                    // Put all messages in the general field
+                    this_form.find(".form-general-error-container").html(message_field_html).fadeIn("fast", function(){
+                        // if submission was successful, hide message after some time
+                        $(this).delay(10000).fadeOut("fast", function(){ $(this).html(""); });
+                    });
 
                     // if form submitted successfully, empty fields
                     if (submission_successful == true) this_form.find(".form-control").val("");
